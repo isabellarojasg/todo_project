@@ -1,0 +1,40 @@
+.todo-item:focus {
+  outline: none;
+  border-color: darkgray;
+}
+
+.todo-item {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  width: 300px;
+  border-width: 1px;
+  border-color: lightgray;
+  padding: 8px;
+  display: block;
+  padding-left: 22px;
+}
+
+.completed-todo-item {
+  text-decoration: line-through;
+}
+
+.todo-item-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.checkbox {
+  position: absolute;
+  left: 0;
+  accent-color: #f5dadf;
+}
+
+.font-style {
+  font-family: "Trebuchet MS", sans-serif;
+}
+
+body {
+  margin: 100px;
+}
