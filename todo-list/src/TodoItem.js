@@ -1,9 +1,15 @@
 import React, { useState } from "react";
 import "./styles.css";
+import { COLOURS } from "./colours";
 
-function TodoItem({ index }) {
+function TodoItem({ index, isDarkMode }) {
   const [isChecked, setChecked] = useState(false);
   const [textInputValue, setTextInputValue] = useState("");
+
+  const todoItemStyles = {
+    color: isDarkMode ? COLOURS.White : COLOURS.Black,
+    backgroundColor: isDarkMode ? COLOURS.Black : COLOURS.White,
+  };
 
   const handleCheckboxChange = () => {
     setChecked(!isChecked);
@@ -30,6 +36,7 @@ function TodoItem({ index }) {
         type="text"
         value={textInputValue}
         onChange={handleTextInputChange}
+        style={todoItemStyles}
       />
     </div>
   );
