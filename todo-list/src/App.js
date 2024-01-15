@@ -1,4 +1,4 @@
-import TodoItem from "./TodoItem";
+import TodoItem from "./TodoItem.tsx";
 import "./styles.css";
 
 function App() {
