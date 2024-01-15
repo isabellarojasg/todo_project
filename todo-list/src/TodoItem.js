@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./styles.css";
 
-function TodoItem(props: any) {
+function TodoItem({ index }) {
   const [isChecked, setChecked] = useState(false);
   const [textInputValue, setTextInputValue] = useState("");
 
@@ -9,12 +9,12 @@ function TodoItem(props: any) {
     setChecked(!isChecked);
   };
 
-  const handleTextInputChange = (event: any) => {
+  const handleTextInputChange = (event) => {
     setTextInputValue(event.target.value);
   };
 
   return (
-    <div key={props.index} className="todo-item-container">
+    <div key={index} className="todo-item-container">
       {textInputValue && (
         <input
           className="checkbox"
