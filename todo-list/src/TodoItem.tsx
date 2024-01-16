@@ -7,7 +7,8 @@ interface TodoItemProps {
   isDarkMode: boolean;
 }
 
-const TodoItem: React.FC<TodoItemProps> = ({ index, isDarkMode }) => {
+const TodoItem: React.FC<TodoItemProps> = (props) => {
+  const { index, isDarkMode } = props;
   const [isChecked, setChecked] = useState(false);
   const [textInputValue, setTextInputValue] = useState<string>("");
 
