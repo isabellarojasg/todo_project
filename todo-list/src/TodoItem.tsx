@@ -1,20 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, ChangeEvent } from "react";
 import "./styles.css";
+import { COLOURS } from "./colours";
 
-function TodoItem(props: any) {
+interface TodoItemProps {
+  index: number;
+  isDarkMode: boolean;
+}
+
+const TodoItem: React.FC<TodoItemProps> = (props) => {
+  const { index, isDarkMode } = props;
   const [isChecked, setChecked] = useState(false);
-  const [textInputValue, setTextInputValue] = useState("");
+  const [textInputValue, setTextInputValue] = useState<string>("");
+
+  const todoItemStyles: React.CSSProperties = {
+    color: isDarkMode ? COLOURS.White : COLOURS.Black,
+    backgroundColor: isDarkMode ? COLOURS.Black : COLOURS.White,
+  };
 
   const handleCheckboxChange = () => {
     setChecked(!isChecked);
   };
 
-  const handleTextInputChange = (event: any) => {
+  const handleTextInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setTextInputValue(event.target.value);
   };
 
   return (
-    <div key={props.index} className="todo-item-container">
+    <div key={index} className="todo-item-container">
       {textInputValue && (
         <input
           className="checkbox"
@@ -30,9 +42,10 @@ function TodoItem(props: any) {
         type="text"
         value={textInputValue}
         onChange={handleTextInputChange}
+        style={todoItemStyles}
       />
     </div>
   );
-}
+};
 
 export default TodoItem;

@@ -28,11 +28,23 @@
 .checkbox {
   position: absolute;
   left: 0;
-  accent-color: #f5dadf;
+  accent-color: rgb(206, 99, 117);
 }
 
 .font-style {
   font-family: "Trebuchet MS", sans-serif;
+}
+
+.white-sun {
+  color: white;
+}
+
+.black-moon {
+  color: #2f3537;
+}
+
+.hover-style:hover {
+  color: #a0a0a0;
 }
 
 body {
