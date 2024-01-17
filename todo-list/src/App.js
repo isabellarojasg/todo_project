@@ -6,8 +6,8 @@ import { ACCENT_COLOURS, COLOURS } from "./colours";
 function App() {
   const numTodoItems = 10;
   const [isDarkMode, setDarkMode] = useState(false);
-  const [accentColour, setAccentColour] = useState(COLOURS.Black);
-  const [selectedDroplet, setSelectedDroplet] = useState(null);
+  const [accentColour, setAccentColour] = useState(ACCENT_COLOURS.Blue);
+  const [selectedDroplet, setSelectedDroplet] = useState(0);
 
   const handleColourSelect = (index, hexColour) => {
     setAccentColour(hexColour);
