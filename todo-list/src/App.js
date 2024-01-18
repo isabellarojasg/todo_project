@@ -1,10 +1,9 @@
 import { useState } from "react";
-import TodoItem from "./TodoItem";
+import WeeklyTodoList from "./WeeklyTodoList"
 import "./styles.css";
 import { ACCENT_COLOURS, COLOURS } from "./colours";
 
 function App() {
-  const numTodoItems = 10;
   const [isDarkMode, setDarkMode] = useState(false);
   const [accentColour, setAccentColour] = useState(ACCENT_COLOURS.Blue);
   const [selectedDroplet, setSelectedDroplet] = useState(0);
@@ -48,22 +47,13 @@ function App() {
           ></i>
         ))}
       </div>
-      <h1
-        className="font-style"
-        style={{ color: isDarkMode ? COLOURS.White : COLOURS.Black }}
-      >
-        TO-DO List
-      </h1>
-      {Array.from({ length: numTodoItems }, (_, index) => (
-        <TodoItem
-          key={index}
-          index={index}
-          isDarkMode={isDarkMode}
-          accentColour={accentColour}
-        />
-      ))}
-        
-    </div>
+        <div className="todo-list-container">
+            <WeeklyTodoList
+              isDarkMode={isDarkMode}
+              accentColour={accentColour}
+            />
+        </div>
+      </div>
   );
 }
 

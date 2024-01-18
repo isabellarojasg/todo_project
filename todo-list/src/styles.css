@@ -49,3 +49,25 @@
 body {
   margin: 100px;
 }
+
+.container {
+  display: flex;
+  gap: 20px;
+}
+
+/* Todo list container styles */
+.todo-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.weekly-todo-list {
+  display: flex;
+  overflow-x: auto; /* This is optional for horizontal scrolling if needed */
+}
+
+.day-todo-list {
+  flex: 0 0 auto; /* Ensure day-todo-list elements don't grow and shrink */
+  margin-right: 10px; /* Adjust the spacing between day lists as needed */
+}
