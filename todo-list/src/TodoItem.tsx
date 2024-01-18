@@ -5,16 +5,21 @@ import { COLOURS } from "./colours";
 interface TodoItemProps {
   index: number;
   isDarkMode: boolean;
+  accentColour: string;
 }
 
 const TodoItem: React.FC<TodoItemProps> = (props) => {
-  const { index, isDarkMode } = props;
+  const { index, isDarkMode, accentColour } = props;
   const [isChecked, setChecked] = useState(false);
   const [textInputValue, setTextInputValue] = useState<string>("");
 
   const todoItemStyles: React.CSSProperties = {
     color: isDarkMode ? COLOURS.White : COLOURS.Black,
     backgroundColor: isDarkMode ? COLOURS.Black : COLOURS.White,
+  };
+
+  const checkBoxStyles: React.CSSProperties = {
+    accentColor: accentColour,
   };
 
   const handleCheckboxChange = () => {
@@ -33,6 +38,7 @@ const TodoItem: React.FC<TodoItemProps> = (props) => {
           type="checkbox"
           checked={isChecked}
           onChange={handleCheckboxChange}
+          style={checkBoxStyles}
         />
       )}
       <input
