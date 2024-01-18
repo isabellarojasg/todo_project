@@ -52,7 +52,7 @@ function App() {
         className="font-style"
         style={{ color: isDarkMode ? COLOURS.White : COLOURS.Black }}
       >
-        TO-DO LIST
+        TO-DO List
       </h1>
       {Array.from({ length: numTodoItems }, (_, index) => (
         <TodoItem
@@ -62,6 +62,7 @@ function App() {
           accentColour={accentColour}
         />
       ))}
+        
     </div>
   );
 }
