@@ -10,8 +10,13 @@ interface TodoItemProps {
 
 const TodoItem: React.FC<TodoItemProps> = (props) => {
   const { index, isDarkMode, accentColour } = props;
-  const [isChecked, setChecked] = useState(false);
-  const [textInputValue, setTextInputValue] = useState<string>("");
+  const storedTodoJSON = localStorage.getItem(`${index}`);
+  const [isChecked, setChecked] = useState(() => {
+    return storedTodoJSON ? JSON.parse(storedTodoJSON).completed : false;
+  });
+  const [textInputValue, setTextInputValue] = useState(() => {
+    return storedTodoJSON ? JSON.parse(storedTodoJSON).text : "";
+  });
 
   const todoItemStyles: React.CSSProperties = {
     color: isDarkMode ? COLOURS.White : COLOURS.Black,
@@ -23,11 +28,23 @@ const TodoItem: React.FC<TodoItemProps> = (props) => {
   };
 
   const handleCheckboxChange = () => {
-    setChecked(!isChecked);
+    setChecked((isChecked: boolean) => {
+      const newChecked = !isChecked;
+      localStorage.setItem(
+        `${index}`,
+        JSON.stringify({ text: textInputValue, completed: newChecked })
+      );
+      return newChecked;
+    });
   };
 
   const handleTextInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setTextInputValue(event.target.value);
+    const newValue = event.target.value;
+    setTextInputValue(newValue);
+    localStorage.setItem(
+      `${index}`,
+      JSON.stringify({ text: newValue, completed: isChecked })
+    );
   };
 
   return (
