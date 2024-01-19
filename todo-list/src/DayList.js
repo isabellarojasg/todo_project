@@ -37,7 +37,6 @@ const DayList = (props) => {
   };
 
   const handleKeyDown = (event, index) => {
-    console.log(event.key);
     if (event.key === "Enter") {
       const nextIndex = index + 1;
       if (nextIndex < numTodoItems) {
