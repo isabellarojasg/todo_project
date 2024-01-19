@@ -37,7 +37,7 @@ const DayList = (props) => {
   };
 
   const handleKeyDown = (event, index) => {
-    if (event.key === "Enter") {
+    if (event.key === "Enter" && textInputValues[index]) {
       const nextIndex = index + 1;
       if (nextIndex < numTodoItems) {
         document.getElementById(`todo-input-${nextIndex}`).focus();
@@ -65,7 +65,7 @@ const DayList = (props) => {
               value={textInputValues[index]}
               onChange={(event) => handleTextInputChange(event, index)}
               onKeyDown={(event) => handleKeyDown(event, index)}
-              style={todoItemStyles}
+              style={{...todoItemStyles, pointerEvents: index!=0 && !textInputValues[index-1] ? "none" : "auto"}}
             />
             {textInputValues[index] && (
               <input
@@ -77,7 +77,7 @@ const DayList = (props) => {
               />
             )}
           </div>
-        ))}
+      ))}
       </div>
     </div>
   );
