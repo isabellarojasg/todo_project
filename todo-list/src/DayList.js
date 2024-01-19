@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import "./styles.css";
-import { COLOURS } from "./colours";
+import PropTypes from "prop-types";
+import { ACCENT_COLOURS, COLOURS } from "./colours";
 
-const CombinedComponent = (props) => {
+const DayList = (props) => {
   const numTodoItems = 10;
   const { day, isDarkMode, accentColour } = props;
-  const [isChecked, setChecked] = useState(false);
-  const [textInputValue, setTextInputValue] = useState(['']);
+  const [isChecked, setChecked] = useState(
+    Array.from({ length: numTodoItems }).fill(false)
+  );
+  const [textInputValue, setTextInputValue] = useState([""]);
 
   const todoItemStyles = {
     color: isDarkMode ? COLOURS.White : COLOURS.Black,
@@ -18,7 +21,9 @@ const CombinedComponent = (props) => {
   };
 
   const handleCheckboxChange = (index) => {
-    setChecked(!isChecked);
+    const newCheckedState = [...isChecked];
+    newCheckedState[index] = !newCheckedState[index];
+    setChecked(newCheckedState);
   };
 
   const handleTextInputChange = (event) => {
@@ -56,4 +61,9 @@ const CombinedComponent = (props) => {
   );
 };
 
-export default CombinedComponent;
+DayList.propTypes = {
+  day: PropTypes.string.isRequired,
+  isDarkMode: PropTypes.bool.isRequired,
+  accentColour: PropTypes.oneOf(Object.keys(ACCENT_COLOURS)).isRequired,
+};
+export default DayList;

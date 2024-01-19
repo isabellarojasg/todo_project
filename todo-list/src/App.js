@@ -1,12 +1,12 @@
-import { useState } from "react";
+import * as React from 'react';
 import WeeklyTodoList from "./WeeklyTodoList"
 import "./styles.css";
 import { ACCENT_COLOURS, COLOURS } from "./colours";
 
 function App() {
-  const [isDarkMode, setDarkMode] = useState(false);
-  const [accentColour, setAccentColour] = useState(ACCENT_COLOURS.Blue);
-  const [selectedDroplet, setSelectedDroplet] = useState(0);
+  const [isDarkMode, setDarkMode] = React.useState(false);
+  const [accentColour, setAccentColour] = React.useState(ACCENT_COLOURS.Blue);
+  const [selectedDroplet, setSelectedDroplet] = React.useState(0);
 
   const handleColourSelect = (index, hexColour) => {
     setAccentColour(hexColour);
