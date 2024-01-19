@@ -64,6 +64,6 @@ const DayList = (props) => {
 DayList.propTypes = {
   day: PropTypes.string.isRequired,
   isDarkMode: PropTypes.bool.isRequired,
-  accentColour: PropTypes.oneOf(Object.keys(ACCENT_COLOURS)).isRequired,
+  accentColour: PropTypes.oneOf(Object.values(ACCENT_COLOURS)).isRequired,
 };
 export default DayList;
