@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./styles.css";
 import PropTypes from "prop-types";
 import { ACCENT_COLOURS, COLOURS } from "./colours";
 
@@ -9,7 +8,9 @@ const DayList = (props) => {
   const [isChecked, setChecked] = useState(
     Array.from({ length: numTodoItems }).fill(false)
   );
-  const [textInputValue, setTextInputValue] = useState([""]);
+  const [textInputValues, setTextInputValues] = useState(
+    Array.from({ length: numTodoItems }).fill("")
+  );
 
   const todoItemStyles = {
     color: isDarkMode ? COLOURS.White : COLOURS.Black,
@@ -26,8 +27,28 @@ const DayList = (props) => {
     setChecked(newCheckedState);
   };
 
-  const handleTextInputChange = (event) => {
-    setTextInputValue(event.target.value);
+  const handleTextInputChange = (event, index) => {
+    const { value } = event.target;
+    setTextInputValues((prevValues) => {
+      const updatedValues = [...prevValues];
+      updatedValues[index] = value;
+      return updatedValues;
+    });
+  };
+
+  const handleKeyDown = (event, index) => {
+    console.log(event.key);
+    if (event.key === "Enter") {
+      const nextIndex = index + 1;
+      if (nextIndex < numTodoItems) {
+        document.getElementById(`todo-input-${nextIndex}`).focus();
+      }
+    }
+    if (event.key === "Backspace" && textInputValues[index] == "") {
+      const nextIndex = index === 0 ? 0 : index - 1;
+      event.preventDefault();
+      document.getElementById(`todo-input-${nextIndex}`).focus();
+    }
   };
 
   return (
@@ -36,7 +57,18 @@ const DayList = (props) => {
       <div className="todo-list-container">
         {Array.from({ length: numTodoItems }, (_, index) => (
           <div key={index} className="todo-item-container">
-            {textInputValue[index] && (
+            <input
+              id={`todo-input-${index}`}
+              className={`todo-item font-style ${
+                isChecked[index] ? "completed-todo-item" : ""
+              }`}
+              type="text"
+              value={textInputValues[index]}
+              onChange={(event) => handleTextInputChange(event, index)}
+              onKeyDown={(event) => handleKeyDown(event, index)}
+              style={todoItemStyles}
+            />
+            {textInputValues[index] && (
               <input
                 className="checkbox"
                 type="checkbox"
@@ -45,15 +77,6 @@ const DayList = (props) => {
                 style={checkBoxStyles}
               />
             )}
-            <input
-              className={`todo-item font-style ${
-                isChecked ? "completed-todo-item" : ""
-              }`}
-              type="text"
-              value={textInputValue[index]}
-              onChange={(event) => handleTextInputChange(event)}
-              style={todoItemStyles}
-            />
           </div>
         ))}
       </div>
@@ -66,4 +89,5 @@ DayList.propTypes = {
   isDarkMode: PropTypes.bool.isRequired,
   accentColour: PropTypes.oneOf(Object.values(ACCENT_COLOURS)).isRequired,
 };
+
 export default DayList;
