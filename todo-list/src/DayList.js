@@ -40,13 +40,13 @@ const DayList = (props) => {
     if (event.key === "Enter" && textInputValues[index]) {
       const nextIndex = index + 1;
       if (nextIndex < numTodoItems) {
-        document.getElementById(`todo-input-${nextIndex}`).focus();
+        document.getElementById(`todo-input-${day}-${nextIndex}`).focus();
       }
     }
     if (event.key === "Backspace" && textInputValues[index] == "") {
       const nextIndex = index === 0 ? 0 : index - 1;
       event.preventDefault();
-      document.getElementById(`todo-input-${nextIndex}`).focus();
+      document.getElementById(`todo-input-${day}-${nextIndex}`).focus();
     }
   };
 
@@ -57,7 +57,7 @@ const DayList = (props) => {
         {Array.from({ length: numTodoItems }, (_, index) => (
           <div key={index} className="todo-item-container">
             <input
-              id={`todo-input-${index}`}
+              id={`todo-input-${day}-${index}`}
               className={`todo-item font-style ${
                 isChecked[index] ? "completed-todo-item" : ""
               }`}
@@ -65,7 +65,11 @@ const DayList = (props) => {
               value={textInputValues[index]}
               onChange={(event) => handleTextInputChange(event, index)}
               onKeyDown={(event) => handleKeyDown(event, index)}
-              style={{...todoItemStyles, pointerEvents: index!=0 && !textInputValues[index-1] ? "none" : "auto"}}
+              style={{
+                ...todoItemStyles,
+                pointerEvents:
+                  index != 0 && !textInputValues[index - 1] ? "none" : "auto",
+              }}
             />
             {textInputValues[index] && (
               <input
@@ -77,7 +81,7 @@ const DayList = (props) => {
               />
             )}
           </div>
-      ))}
+        ))}
       </div>
     </div>
   );

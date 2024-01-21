@@ -1,5 +1,5 @@
-import * as React from 'react';
-import WeeklyTodoList from "./WeeklyTodoList"
+import * as React from "react";
+import WeeklyTodoList from "./WeeklyTodoList";
 import "./styles.css";
 import { ACCENT_COLOURS, COLOURS } from "./colours";
 
@@ -14,7 +14,6 @@ function App() {
   };
 
   const toggleDarkMode = () => {
-
     setDarkMode(!isDarkMode);
   };
 
@@ -48,13 +47,10 @@ function App() {
           ></i>
         ))}
       </div>
-        <div className="todo-list-container">
-            <WeeklyTodoList
-              isDarkMode={isDarkMode}
-              accentColour={accentColour}
-            />
-        </div>
+      <div className="todo-list-container">
+        <WeeklyTodoList isDarkMode={isDarkMode} accentColour={accentColour} />
       </div>
+    </div>
   );
 }
 
