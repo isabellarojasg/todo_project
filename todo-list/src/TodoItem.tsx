@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, useEffect } from "react";
 import "./styles.css";
 import { COLOURS } from "./colours";
 
@@ -6,10 +6,11 @@ interface TodoItemProps {
   index: number;
   isDarkMode: boolean;
   accentColour: string;
+  onDelete: (index: number) => void;
 }
 
 const TodoItem: React.FC<TodoItemProps> = (props) => {
-  const { index, isDarkMode, accentColour } = props;
+  const { index, isDarkMode, accentColour, onDelete } = props;
   const storedTodoJSON = localStorage.getItem(`${index}`);
   const [isChecked, setChecked] = useState(() => {
     return storedTodoJSON ? JSON.parse(storedTodoJSON).completed : false;
@@ -17,6 +18,7 @@ const TodoItem: React.FC<TodoItemProps> = (props) => {
   const [textInputValue, setTextInputValue] = useState(() => {
     return storedTodoJSON ? JSON.parse(storedTodoJSON).text : "";
   });
+  const [showDelete, setShowDelete] = useState(false);
 
   const todoItemStyles: React.CSSProperties = {
     color: isDarkMode ? COLOURS.White : COLOURS.Black,
@@ -26,6 +28,12 @@ const TodoItem: React.FC<TodoItemProps> = (props) => {
   const checkBoxStyles: React.CSSProperties = {
     accentColor: accentColour,
   };
+
+  useEffect(() => {
+    if (textInputValue === "") {
+      setChecked(false);
+    }
+  }, [textInputValue]);
 
   const handleCheckboxChange = () => {
     setChecked((isChecked: boolean) => {
@@ -47,8 +55,20 @@ const TodoItem: React.FC<TodoItemProps> = (props) => {
     );
   };
 
+  const handleDelete = () => {
+    setTextInputValue("");
+    setChecked(false);
+    onDelete(index);
+    localStorage.removeItem(`${index}`);
+  };
+
   return (
-    <div key={index} className="todo-item-container">
+    <div
+      key={index}
+      className="todo-item-container"
+      onMouseEnter={() => setShowDelete(true)}
+      onMouseLeave={() => setShowDelete(false)}
+    >
       {textInputValue && (
         <input
           className="checkbox"
@@ -67,6 +87,13 @@ const TodoItem: React.FC<TodoItemProps> = (props) => {
         onChange={handleTextInputChange}
         style={todoItemStyles}
       />
+      {showDelete && textInputValue && (
+        <i
+          style={{ color: accentColour }}
+          className="fa-solid fa-trash"
+          onClick={handleDelete}
+        ></i>
+      )}
     </div>
   );
 };
