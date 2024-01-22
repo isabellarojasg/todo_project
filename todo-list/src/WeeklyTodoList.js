@@ -1,9 +1,7 @@
 import React from "react";
 import DayList from "./DayList";
 import PropTypes from "prop-types";
-import { ACCENT_COLOURS, COLOURS} from "./colours";
-
-
+import { ACCENT_COLOURS, COLOURS } from "./colours";
 
 const WeeklyTodoList = (props) => {
   const daysOfWeek = [
@@ -24,11 +22,7 @@ const WeeklyTodoList = (props) => {
   return (
     <div className="weekly-todo-list" style={todoItemStyles}>
       {daysOfWeek.map((day) => (
-        <DayList
-          key={day}
-          day={day}
-          {...props}
-        />
+        <DayList key={day} day={day} {...props} />
       ))}
     </div>
   );

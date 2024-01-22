@@ -7,7 +7,7 @@
   border-top: none;
   border-left: none;
   border-right: none;
-  width: 300px;
+  width: 140px;
   border-width: 1px;
   border-color: lightgray;
   padding: 8px;
@@ -47,7 +47,7 @@
 }
 
 body {
-  margin: 100px;
+  margin: 50px;
 }
 
 .container {
@@ -69,5 +69,5 @@ body {
 
 .day-todo-list {
   flex: 0 0 auto; /* Ensure day-todo-list elements don't grow and shrink */
-  margin-right: 10px; /* Adjust the spacing between day lists as needed */
+  margin-right: 25px; /* Adjust the spacing between day lists as needed */
 }

@@ -1,29 +1,29 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { ACCENT_COLOURS, COLOURS } from "./colours";
+import { ACCENT_COLOURS } from "./colours";
+import TodoItem from "./TodoItem";
 
 const DayList = (props) => {
   const numTodoItems = 10;
   const { day, isDarkMode, accentColour } = props;
-  const [isChecked, setChecked] = useState(
-    Array.from({ length: numTodoItems }).fill(false)
-  );
-  const [textInputValues, setTextInputValues] = useState(
-    Array.from({ length: numTodoItems }).fill("")
-  );
+  const storedCheckedList = localStorage.getItem(`${day}-CheckedList`);
+  const [isChecked, setChecked] = useState(() => {
+    return storedCheckedList
+      ? storedCheckedList.split(",").map((value) => JSON.parse(value))
+      : Array.from({ length: numTodoItems }).fill(false);
+  });
 
-  const todoItemStyles = {
-    color: isDarkMode ? COLOURS.White : COLOURS.Black,
-    backgroundColor: isDarkMode ? COLOURS.Black : COLOURS.White,
-  };
-
-  const checkBoxStyles = {
-    accentColor: accentColour,
-  };
+  const storedTextList = localStorage.getItem(`${day}-TextList`);
+  const [textInputValues, setTextInputValues] = useState(() => {
+    return storedTextList
+      ? storedTextList.split(",")
+      : Array.from({ length: numTodoItems }).fill("");
+  });
 
   const handleCheckboxChange = (index) => {
     const newCheckedState = [...isChecked];
     newCheckedState[index] = !newCheckedState[index];
+    localStorage.setItem(`${day}-CheckedList`, newCheckedState);
     setChecked(newCheckedState);
   };
 
@@ -32,6 +32,7 @@ const DayList = (props) => {
     setTextInputValues((prevValues) => {
       const updatedValues = [...prevValues];
       updatedValues[index] = value;
+      localStorage.setItem(`${day}-TextList`, updatedValues);
       return updatedValues;
     });
   };
@@ -52,35 +53,22 @@ const DayList = (props) => {
 
   return (
     <div className="day-todo-list">
-      <h1 className="font-style">{day}</h1>
+      <h2 className="font-style">{day}</h2>
       <div className="todo-list-container">
         {Array.from({ length: numTodoItems }, (_, index) => (
-          <div key={index} className="todo-item-container">
-            <input
-              id={`todo-input-${day}-${index}`}
-              className={`todo-item font-style ${
-                isChecked[index] ? "completed-todo-item" : ""
-              }`}
-              type="text"
-              value={textInputValues[index]}
-              onChange={(event) => handleTextInputChange(event, index)}
-              onKeyDown={(event) => handleKeyDown(event, index)}
-              style={{
-                ...todoItemStyles,
-                pointerEvents:
-                  index != 0 && !textInputValues[index - 1] ? "none" : "auto",
-              }}
-            />
-            {textInputValues[index] && (
-              <input
-                className="checkbox"
-                type="checkbox"
-                checked={isChecked[index]}
-                onChange={() => handleCheckboxChange(index)}
-                style={checkBoxStyles}
-              />
-            )}
-          </div>
+          <TodoItem
+            key={index}
+            index={index}
+            day={day}
+            value={textInputValues[index]}
+            checked={isChecked[index]}
+            isDarkMode={isDarkMode}
+            accentColour={accentColour}
+            handleKeyDown={handleKeyDown}
+            handleTextInputChange={handleTextInputChange}
+            handleCheckboxChange={handleCheckboxChange}
+            prevTodoItem={textInputValues[index - 1]}
+          />
         ))}
       </div>
     </div>
