@@ -44,11 +44,27 @@ const DayList = (props) => {
         document.getElementById(`todo-input-${day}-${nextIndex}`).focus();
       }
     }
-    if (event.key === "Backspace" && textInputValues[index] == "") {
+    if (event.key === "Backspace" && textInputValues[index] === "") {
       const nextIndex = index === 0 ? 0 : index - 1;
       event.preventDefault();
       document.getElementById(`todo-input-${day}-${nextIndex}`).focus();
     }
+  };
+
+  const handleDelete = (index) => {
+    setTextInputValues((prevValues) => {
+      const updatedValues = [...prevValues];
+      updatedValues.splice(index, 1);
+      updatedValues.push("");
+      localStorage.setItem(`${day}-TextList`, updatedValues);
+      return updatedValues;
+    });
+
+    const newCheckedState = [...isChecked];
+    newCheckedState.shift();
+    newCheckedState.push(false);
+    localStorage.setItem(`${day}-CheckedList`, newCheckedState);
+    setChecked(newCheckedState);
   };
 
   return (
@@ -67,6 +83,7 @@ const DayList = (props) => {
             handleKeyDown={handleKeyDown}
             handleTextInputChange={handleTextInputChange}
             handleCheckboxChange={handleCheckboxChange}
+            handleDelete={handleDelete}
             prevTodoItem={textInputValues[index - 1]}
           />
         ))}

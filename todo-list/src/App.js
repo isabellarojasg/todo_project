@@ -4,6 +4,7 @@ import "./styles.css";
 import { ACCENT_COLOURS, COLOURS } from "./colours";
 
 function App() {
+  const [hoveredDroplet, setHoveredDroplet] = React.useState(null);
   const storedDarkModeJSON = localStorage.getItem("isDarkMode");
   const [isDarkMode, setDarkMode] = React.useState(() => {
     return storedDarkModeJSON ? JSON.parse(storedDarkModeJSON) : false;
@@ -60,7 +61,10 @@ function App() {
             style={{
               color: ACCENT_COLOURS[colour],
               transform: selectedDroplet === index ? "translateY(50%)" : "",
+              opacity: hoveredDroplet === index ? 0.7 : 1,
             }}
+            onMouseEnter={() => setHoveredDroplet(index)}
+            onMouseLeave={() => setHoveredDroplet(null)}
           ></i>
         ))}
       </div>
