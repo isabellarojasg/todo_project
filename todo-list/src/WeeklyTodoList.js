@@ -1,9 +1,7 @@
 import React from "react";
 import DayList from "./DayList";
 import PropTypes from "prop-types";
-import { ACCENT_COLOURS, COLOURS} from "./colours";
-
-
+import { ACCENT_COLOURS, COLOURS } from "./colours";
 
 const WeeklyTodoList = (props) => {
   const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -14,7 +12,7 @@ const WeeklyTodoList = (props) => {
 
   // Determine the index of the starting day
   const startingDayIndex = daysOfWeek.indexOf(currentDayNumber);
-  const [currentWeekStartingDay, setCurrentWeekStartingDay] = React.useState(currentDayNumber);
+  //const [currentWeekStartingDay, setCurrentWeekStartingDay] = React.useState(currentDayNumber);
 
 
   const todoItemStyles = {
@@ -42,12 +40,7 @@ const WeeklyTodoList = (props) => {
     <button onClick={goToNextWeek}>Next Week</button>
     <div className="weekly-todo-list" style={todoItemStyles}>
       {daysOfWeek.map((day) => (
-        <DayList
-          key={day}
-          day={day}
-          currentDay={currentWeekStartingDay}
-          {...props}
-        />
+        <DayList key={day} day={day} {...props} />
       ))}
     </div>
     </div>
